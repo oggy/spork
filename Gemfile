@@ -1,4 +1,4 @@
-source :gemcutter
+source 'https://rubygems.org'
 gemspec
 gem 'cucumber', '~> 1.0.0'
 gem 'rspec', '~> 2.8'
