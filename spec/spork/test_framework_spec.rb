@@ -78,13 +78,13 @@ describe Spork::TestFramework do
     it "defaults to use rspec over cucumber" do
       Spork::TestFramework::RSpec.stub!(:available?).and_return(true)
       Spork::TestFramework::Cucumber.stub!(:available?).and_return(true)
-      Spork::TestFramework.factory(STDOUT, STDERR).class.should == Spork::TestFramework::RSpec
+      Spork::TestFramework.factory(output: STDOUT, error: STDERR).class.should == Spork::TestFramework::RSpec
     end
 
     it "defaults to use cucumber when rspec not available" do
       Spork::TestFramework::RSpec.stub!(:available?).and_return(false)
       Spork::TestFramework::Cucumber.stub!(:available?).and_return(true)
-      Spork::TestFramework.factory(STDOUT, STDERR).class.should == Spork::TestFramework::Cucumber
+      Spork::TestFramework.factory(output: STDOUT, error: STDERR).class.should == Spork::TestFramework::Cucumber
     end
   end
 end

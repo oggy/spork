@@ -47,7 +47,7 @@ module Spork
     
     # Returns a server for the specified (or the detected default) testing framework.  Returns nil if none detected, or if the specified is not supported or available.
     def find_test_framework
-      Spork::TestFramework.factory(@output, @error, options[:server_matcher])
+      Spork::TestFramework.factory(output: @output, error: @error, beginning_with: options[:server_matcher])
     rescue Spork::TestFramework::NoFrameworksAvailable => e
       @error.puts e.message
     rescue Spork::TestFramework::FactoryException => e

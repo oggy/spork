@@ -8,8 +8,8 @@ class MagazineSlave
   attr_reader :id_num
   def initialize(id_num, test_framework_short_name)
     @id_num = id_num
-    @test_framework = Spork::TestFramework.factory(STDOUT, STDERR,
-                                                   test_framework_short_name)
+    @test_framework = Spork::TestFramework.factory(output: STDOUT, error: STDERR,
+                                                   beginning_with: test_framework_short_name)
 #    ENV["DRB"] = 'true'
 #    Spork.using_spork!
     return(nil) unless preload

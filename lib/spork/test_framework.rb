@@ -37,8 +37,8 @@ class Spork::TestFramework
     @stdout, @stderr = stdout, stderr
   end
 
-  def self.factory(output = STDOUT, error = STDERR, beginning_with = nil)
-    if beginning_with
+  def self.factory(options = {})
+    if (beginning_with = options[:beginning_with])
       @klass = supported_test_frameworks(beginning_with).first
       raise(NoFrameworkMatched.new(beginning_with)) if @klass.nil?
       raise(FrameworkNotAvailable.new(@klass)) unless @klass.available?
@@ -46,7 +46,7 @@ class Spork::TestFramework
       @klass = available_test_frameworks.first
       raise(NoFrameworksAvailable.new) unless @klass
     end
-    @klass.new(output, error)
+    @klass.new(options[:output] || STDOUT, options[:error] || STDERR)
   end
 
   def self.helper_file
