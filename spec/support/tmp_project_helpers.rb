@@ -13,7 +13,7 @@ module TmpProjectHelpers
   end
 
   def create_helper_file(test_framework = FakeFramework)
-    create_file(test_framework.helper_file, "# stub spec helper file")
+    create_file(test_framework::HELPER_FILE, "# stub spec helper file")
   end
 
   def in_current_dir(&block)

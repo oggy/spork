@@ -14,10 +14,4 @@ shared_examples "a TestFramework" do
       end
     end
   end
-
-  describe ".helper_file" do
-    it "returns ::HELPER_FILE for the TestFramework" do
-      described_class.helper_file.should == described_class::HELPER_FILE
-    end
-  end
 end

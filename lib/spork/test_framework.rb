@@ -3,7 +3,7 @@ class Spork::TestFramework
   BOOTSTRAP_FILE = File.dirname(__FILE__) + "/../../assets/bootstrap.rb"
 
   @@supported_test_frameworks = []
-  attr_reader :stdout, :stderr
+  attr_reader :stdout, :stderr, :helper_file
 
   class FactoryException < Exception; end
 
@@ -33,8 +33,10 @@ class Spork::TestFramework
     end
   end
 
-  def initialize(stdout = STDOUT, stderr = STDERR)
-    @stdout, @stderr = stdout, stderr
+  def initialize(params = {})
+    @stdout = params[:output] || STDOUT
+    @stderr = params[:error ] || STDERR
+    @helper_file = params[:file] || self.class::HELPER_FILE
   end
 
   def self.factory(options = {})
@@ -46,11 +48,7 @@ class Spork::TestFramework
       @klass = available_test_frameworks.first
       raise(NoFrameworksAvailable.new) unless @klass
     end
-    @klass.new(options[:output] || STDOUT, options[:error] || STDERR)
-  end
-
-  def self.helper_file
-    self::HELPER_FILE
+    @klass.new(options)
   end
 
   def self.default_port
@@ -79,10 +77,6 @@ class Spork::TestFramework
     self.class.short_name
   end
 
-  def helper_file
-    self.class.helper_file
-  end
-
   # Detects if the test helper has been bootstrapped.
   def bootstrapped?
     File.read(helper_file).include?("Spork.prefork")
@@ -108,7 +102,7 @@ class Spork::TestFramework
 
   # Returns true if the testing frameworks helper file exists.  Override if this is not sufficient to detect your testing framework.
   def self.available?
-    File.exist?(helper_file)
+    File.exist?(self::HELPER_FILE)
   end
 
   # Used to specify
